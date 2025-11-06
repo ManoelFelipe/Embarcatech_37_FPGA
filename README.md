@@ -11,9 +11,9 @@ Repositório oficial: https://github.com/ManoelFelipe/Embarcatech_37_FPGA
 👨‍💻 Autores
 Projeto acadêmico — Instituto Federal do Maranhão (IFMA).
 
-- Manoel Furtado
-- Yuri Cândido
-- Paulo Gomes
+- Manoel Furtado - manoel.furtado.br@outlook.com
+- Yuri Cândido - yuri.gcandido@gmail.com    
+- Paulo Gomes - paulo.gabriel1019@gmail.com
 
 📜 Licença
 Distribuído sob a licença MIT. Você é livre para usar, modificar e distribuir, mantendo os créditos.

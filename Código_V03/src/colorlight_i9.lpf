@@ -1,0 +1,112 @@
+# -------------------------------------------------------------------
+# colorlight_i9.lpf - mapeamento de pinos (ajustar SITE conforme PCB)
+# Gerado a partir de pump_controller_simple.sv
+# Observação: nomes devem ser idênticos aos sinais do SV.
+# Sensores ativos-baixo tratados no SV (INVERT_LEVEL_CODE).
+# -------------------------------------------------------------------
+
+# INPUT clk 
+LOCATE COMP "clk" SITE "P3";
+IOBUF PORT "clk";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# INPUT rst_n 
+LOCATE COMP "rst_n" SITE "R17";
+IOBUF PORT "rst_n" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# INPUT en_auto 
+LOCATE COMP "en_auto" SITE "R18";
+IOBUF PORT "en_auto" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# INPUT lvl_inf ([2:0])
+LOCATE COMP "lvl_inf[2]" SITE "L18";
+IOBUF PORT "lvl_inf[2]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+LOCATE COMP "lvl_inf[1]" SITE "G20";
+IOBUF PORT "lvl_inf[1]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+LOCATE COMP "lvl_inf[0]" SITE "J20";
+IOBUF PORT "lvl_inf[0]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# INPUT lvl_sup ([2:0])
+LOCATE COMP "lvl_sup[2]" SITE "K20";
+IOBUF PORT "lvl_sup[2]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+LOCATE COMP "lvl_sup[1]" SITE "M18";
+IOBUF PORT "lvl_sup[1]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+LOCATE COMP "lvl_sup[0]" SITE "L20";
+IOBUF PORT "lvl_sup[0]" PULLMODE=UP; IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# OUTPUT pump_on 
+LOCATE COMP "pump_on" SITE "N17";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# OUTPUT solenoid_open 
+LOCATE COMP "solenoid_open" SITE "N18";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# OUTPUT led_green 
+LOCATE COMP "led_green" SITE "U18";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# OUTPUT led_red 
+LOCATE COMP "led_red" SITE "T17";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# OUTPUT fault 
+LOCATE COMP "fault" SITE "P17";
+IO_TYPE=LVTTL33 ; # ajuste se necessário
+
+# ======================= Display 7-seg — Tanque Inferior (P6) ======
+# Barramento a..g mapeado em seg_inf[6:0] = {a,b,c,d,e,f,g}
+LOCATE COMP "seg_inf[6]" SITE "J16";  # a
+IOBUF  PORT "seg_inf[6]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[5]" SITE "L5";  # b
+IOBUF  PORT "seg_inf[5]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[4]" SITE "M4";  # c
+IOBUF  PORT "seg_inf[4]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[3]" SITE "R3";  # d
+IOBUF  PORT "seg_inf[3]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[2]" SITE "M3";  # e
+IOBUF  PORT "seg_inf[2]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[1]" SITE "J18";  # f
+IOBUF  PORT "seg_inf[1]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[0]" SITE "P16";  # g
+IOBUF  PORT "seg_inf[0]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+# ======================= Display 7-seg — Tanque Superior (P6) ======
+# Barramento a..g mapeado em seg_sup[6:0] = {a,b,c,d,e,f,g}
+LOCATE COMP "seg_sup[6]" SITE "M1";  # a
+IOBUF  PORT "seg_sup[6]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[5]" SITE "W1";  # b
+IOBUF  PORT "seg_sup[5]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[4]" SITE "U1";  # c
+IOBUF  PORT "seg_sup[4]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[3]" SITE "R1";  # d
+IOBUF  PORT "seg_sup[3]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[2]" SITE "N2";  # e
+IOBUF  PORT "seg_sup[2]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[1]" SITE "V1";  # f
+IOBUF  PORT "seg_sup[1]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[0]" SITE "Y2";  # g
+IOBUF  PORT "seg_sup[0]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+# ---------------------------------------------------------------------------
+# Observações
+# - Recomenda-se resistor em série de 220–470 Ω em cada segmento (a..g).
+# - Se o display for comum-ânodo, defina SEG_ACTIVE_HIGH=0 no SystemVerilog.
+# - Se usar transistores para acionamento, ajuste o IO_TYPE e DRIVE conforme necessário.
+# ---------------------------------------------------------------------------

@@ -1,0 +1,128 @@
+# =============================================================================
+# colorlight_i9.lpf (comentado)
+# Projeto: Pump Controller (Simplified) com 2× Display 7-Segmentos
+# FPGA: ECP5 (Colorlight i9)
+# Displays: Comum-Cátodo, segmentos com resistores em série (~330 Ω)
+# =============================================================================
+# Observações Gerais:
+# - IO padrão: LVCMOS33 (nível lógico 3.3 V)
+# - Resistores de 220–470 Ω em série por segmento limitam corrente (≈5–8 mA).
+# - Sem driver externo: segmentos acionados direto pelos pinos da FPGA (DRIVE=8).
+# - Segmentos acendem em nível lógico ALTO (ativo-alto). Ajuste no SV via SEG_ACTIVE_HIGH.
+# - Este arquivo preserva **exatamente as suas pinagens** do anexo original.
+# =============================================================================
+
+
+# ======================= CLOCK e RESET =======================================
+LOCATE COMP "clk"     SITE "P3";     # Clock principal (ex: 25 MHz externo)
+IOBUF  PORT "clk"     IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+LOCATE COMP "rst_n"   SITE "R17";   # Reset síncrono ativo-baixo
+IOBUF  PORT "rst_n"   IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+
+# ======================= ENTRADAS DE NÍVEL (TANQUE INF) ======================
+# Entradas do sensor do Tanque Inferior (código 3 bits: 0=0% … 4=100%)
+LOCATE COMP "lvl_inf[0]" SITE "J20";  # LSB
+IOBUF  PORT "lvl_inf[0]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+LOCATE COMP "lvl_inf[1]" SITE "G20";
+IOBUF  PORT "lvl_inf[1]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+LOCATE COMP "lvl_inf[2]" SITE "L18";  # MSB
+IOBUF  PORT "lvl_inf[2]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+
+# ======================= ENTRADAS DE NÍVEL (TANQUE SUP) ======================
+LOCATE COMP "lvl_sup[0]" SITE "L20";
+IOBUF  PORT "lvl_sup[0]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+LOCATE COMP "lvl_sup[1]" SITE "M18";
+IOBUF  PORT "lvl_sup[1]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+LOCATE COMP "lvl_sup[2]" SITE "K20";
+IOBUF  PORT "lvl_sup[2]" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+
+# ======================= CONTROLE DE MODO ====================================
+LOCATE COMP "en_auto" SITE "R18";   # 1 = automático; 0 = manual/forçado OFF
+IOBUF  PORT "en_auto" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+
+# ======================= SAÍDAS DE CONTROLE ==================================
+# Sinais para acionar relés (bomba e válvula). Ajuste DRIVE se necessário.
+LOCATE COMP "pump_on"       SITE "N17";       # Relé da bomba
+IOBUF  PORT "pump_on"       IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "solenoid_open" SITE "N18"; # Relé da válvula solenoide
+IOBUF  PORT "solenoid_open" IO_TYPE=LVCMOS33 DRIVE=8;
+
+
+# ======================= LEDS DE STATUS ======================================
+LOCATE COMP "led_green" SITE "U18";  # ON = bomba ligada
+IOBUF  PORT "led_green" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "led_red"   SITE "T17";    # ON = bomba desligada
+IOBUF  PORT "led_red"   IO_TYPE=LVCMOS33 DRIVE=8;
+
+
+# ======================= SAÍDA DE FALHA ======================================
+# Reservado para versão robusta (FAULT); aqui pode permanecer mapeado para debug
+LOCATE COMP "fault" SITE "P17";
+IOBUF  PORT "fault" IO_TYPE=LVCMOS33 DRIVE=8;
+
+
+# ======================= DISPLAY 7-SEG — TANQUE INFERIOR =====================
+# Barramento: seg_inf[6:0] = {a,b,c,d,e,f,g} (comum-cátodo, ativo-alto)
+LOCATE COMP "seg_inf[6]" SITE "J16";  # a
+IOBUF  PORT "seg_inf[6]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[5]" SITE "L5";  # b
+IOBUF  PORT "seg_inf[5]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[4]" SITE "M4";  # c
+IOBUF  PORT "seg_inf[4]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[3]" SITE "R3";  # d
+IOBUF  PORT "seg_inf[3]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[2]" SITE "M3";  # e
+IOBUF  PORT "seg_inf[2]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[1]" SITE "J18";  # f
+IOBUF  PORT "seg_inf[1]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_inf[0]" SITE "P16";  # g
+IOBUF  PORT "seg_inf[0]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+
+# ======================= DISPLAY 7-SEG — TANQUE SUPERIOR =====================
+# Barramento: seg_sup[6:0] = {a,b,c,d,e,f,g} (comum-cátodo, ativo-alto)
+LOCATE COMP "seg_sup[6]" SITE "M1";  # a
+IOBUF  PORT "seg_sup[6]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[5]" SITE "W1";  # b
+IOBUF  PORT "seg_sup[5]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[4]" SITE "U1";  # c
+IOBUF  PORT "seg_sup[4]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[3]" SITE "R1";  # d
+IOBUF  PORT "seg_sup[3]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[2]" SITE "N2";  # e
+IOBUF  PORT "seg_sup[2]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[1]" SITE "V1";  # f
+IOBUF  PORT "seg_sup[1]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+LOCATE COMP "seg_sup[0]" SITE "Y2";  # g
+IOBUF  PORT "seg_sup[0]" IO_TYPE=LVCMOS33 DRIVE=8;
+
+
+# ======================= NOTAS FINAIS ========================================
+# - Cada segmento deve possuir resistor individual (~330 Ω).
+# - Corrente típica de LED: 5–10 mA. Ajuste DRIVE conforme necessário.
+# - Para displays comuns-ânodo: defina SEG_ACTIVE_HIGH=0 no SystemVerilog.
+# - Verifique distribuição de pinos entre I/O banks compatíveis com 3.3 V.
+# =============================================================================

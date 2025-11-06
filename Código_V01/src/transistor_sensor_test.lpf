@@ -1,0 +1,38 @@
+# ================================
+# CLOCK 25 MHz e LED
+# ================================
+# LOCATE    COMP "clk" SITE "P3";
+# IOBUF     PORT "clk" IO_TYPE=LVCMOS33;
+# FREQUENCY PORT "clk" 25 MHz;
+
+# LOCATE    COMP "led" SITE "L2";
+# IOBUF     PORT "led" IO_TYPE=LVCMOS33;
+
+# ================================
+# Entrada vinda do coletor do NPN (ativo-baixo)
+# descrever detalhes das entradas
+# ================================
+
+
+#LOCATE COMP "input1" SITE "D1"; IOBUF PORT "input1" IO_TYPE=LVCMOS33 PULLMODE=UP;
+
+
+# Entrada do coletor (ativo-baixo) - escolha o SITE correto do seu jumper
+LOCATE COMP "sensor_col_n" SITE "C1"; 
+IOBUF PORT "sensor_col_n" IO_TYPE=LVCMOS33 PULLMODE=NONE;
+
+
+
+
+
+
+# ================================
+# Saída para LED (3,3V)
+# descrever detalhes das saídas
+# ================================
+
+# LOCATE COMP "output1" SITE "D1"; IOBUF PORT "output1" IO_TYPE=LVCMOS33;
+
+# LED ligado ao pino D1
+LOCATE COMP "led_d1" SITE "D1";
+IOBUF PORT "led_d1" IO_TYPE=LVCMOS33 DRIVE=8 SLEWRATE=FAST;

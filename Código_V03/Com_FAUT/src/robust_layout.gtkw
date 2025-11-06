@@ -1,0 +1,56 @@
+
+[*]
+[*] GTKWave Save File
+[*]
+[dumpfile] "sim_rob.vcd"
+[savefile] "robust_layout.gtkw"
+[timestart] 0
+[treeopen] tb_pump_controller_robust
+[treeopen] tb_pump_controller_robust.dut
+
+@group Clk_Reset
+tb_pump_controller_robust.clk
+tb_pump_controller_robust.rst_n
+@end
+
+@group Entradas_Raw
+tb_pump_controller_robust.en_auto_raw
+tb_pump_controller_robust.lvl_inf_raw[2:0]
+tb_pump_controller_robust.lvl_sup_raw[2:0]
+@end
+
+@group Debounced_Internos
+tb_pump_controller_robust.dut.en_auto_db
+tb_pump_controller_robust.dut.lvl_inf_db[2:0]
+tb_pump_controller_robust.dut.lvl_sup_db[2:0]
+@end
+
+@group Condicoes_Derivadas
+tb_pump_controller_robust.dut.start_cond
+tb_pump_controller_robust.dut.stop_cond
+@end
+
+@group Faults
+tb_pump_controller_robust.dut.fault_latched
+tb_pump_controller_robust.dut.invalid_inf
+tb_pump_controller_robust.dut.invalid_sup
+tb_pump_controller_robust.dut.jump_inf
+tb_pump_controller_robust.dut.jump_sup
+tb_pump_controller_robust.dut.overflow_sup
+tb_pump_controller_robust.dut.dry_inf
+@end
+
+@group Estado_FSM
+tb_pump_controller_robust.dut.state
+tb_pump_controller_robust.dut.state_n
+@end
+
+@group Saidas
+tb_pump_controller_robust.pump_on
+tb_pump_controller_robust.solenoid_open
+tb_pump_controller_robust.led_green
+tb_pump_controller_robust.led_red
+@end
+
+@mark 0 "t0"
+@zoom 1

@@ -90,6 +90,8 @@ nextpnr-ecp5 --json top.json --lpf colorlight_i9.lpf --textcfg top.cfg --um5g-85
 ecppack top.cfg top.bit
 openFPGALoader -b colorlight_i9 top.bit
 
+ ```
+
 Roadmap / Trabalhos Futuros
 
  FSM robusta (timeout, debounce, FAULT recovery)
@@ -101,6 +103,8 @@ Roadmap / Trabalhos Futuros
  Integração com supervisório UART/MQTT
 
  Versão com sensores analógicos (ADC)
+
+
 
 👨‍💻 Autores
 

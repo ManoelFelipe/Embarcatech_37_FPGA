@@ -1,0 +1,86 @@
+Título do projeto:
+Medição de Nível de Líquido – Versão Completa (FSM Robusta) - Em Verilog
+
+Objetivo:
+Implementar um controlador digital totalmente parametrizável para bomba hidráulica e válvula solenóide, utilizando Máquina de Estados Finitos (FSM), com suporte a debounce, detecção de falha, modo automático/manual, displays e ajustes de polaridade.
+
+Descrição do Sistema:
+Mesmo sistema físico da versão simples, porém com controle inteligente e seguro:
+• Tratamento de sinais instáveis (debounce)
+• Verificação de leituras inválidas
+• Estado de falha (FAULT) com recuperação automática
+• Possibilidade de forçar desligamento via modo manual
+• Parametrização completa (níveis, delays, polaridade)
+• Displays visuais de nível
+• Sensores ativos em nível baixo com correção lógica interna
+
+Regras de Controle da Bomba:
+• Liga quando:
+  - lvl_sup <= LVL_SUP_START (default 25%)
+  - lvl_inf >= LVL_INF_START (default 75%)
+• Desliga quando:
+  - lvl_sup >= LVL_SUP_STOP (default 75%)
+  OU
+  - lvl_inf <= LVL_INF_STOP (default 25%)
+
+Regras de Controle da Válvula:
+• Começa ABERTA
+• Fecha quando o tanque inferior atinge 100% (LVL_INF_REFILL)
+• Reabre se cair novamente abaixo desse nível
+
+Modo de Operação:
+• en_auto = 1 → operação normal controlada pela FSM
+• en_auto = 0 → bomba desligada à força, FSM volta a IDLE
+
+Estado de Falha:
+• Ativado se qualquer sensor apresentar dado fora de 0..4
+• Bomba desligada imediatamente
+• Válvula permanece como último estado seguro
+• FSM só sai do FAULT após sinais válidos e período configurado
+
+Parâmetros Principais:
+CLK_HZ, FILTER_MS, FAULT_RECOVERY_MS,
+LVL_SUP_START, LVL_INF_START,
+LVL_SUP_STOP, LVL_INF_STOP,
+LVL_INF_REFILL, INVERT_LEVEL_CODE,
+SEG_ACTIVE_HIGH
+
+Displays:
+• Exibem 1–5 para níveis válidos
+• Exibem "E" em caso de erro de leitura
+
+LEDs (simples, igual versão 01):
+• LED verde aceso = bomba ligada
+• LED vermelho aceso = válvula aberta
+
+FSM Sugerida:
+IDLE → CHECK_START → PUMPING → CHECK_STOP → IDLE  
+FAULT → (aguarda stabilização) → IDLE
+
+Entregáveis (estruturados):
+• pump_controller.v (FSM + parâmetros + comentários)
+• tb_pump_controller.v (testbench com asserts)
+• fsm_diagram.mmd (diagrama em Mermaid.js)
+• Tabela de transição de estados
+• Tabela de sinais / parâmetros
+• README.md com instruções de simulação
+
+
+Entradas:
+- clk: Clock de referência do sistema.
+- rst_n: Reset síncrono, ativo em nível baixo. Deve reinicializar toda a lógica interna.
+- lvl_inf[2:0]: Nível do tanque inferior, codificado em binário: 3'd0=0%, 3'd1=25%, 3'd2=50%, 3'd3=75%, 3'd4=100%.
+- lvl_sup[2:0]: Nível do tanque superior, com a mesma codificação do lvl_inf.
+- lvl_inf[2:0] e lvl_sup[2:0]: níveis discretos codificados (0 → 0%, 4 → 100%).
+Os sensores físicos sejam ativos em nível baixo, o módulo deve usar INVERT_LEVEL_CODE = 1 para ajustar automaticamente a leitura.
+
+- en_auto: Habilita o modo de operação automático (1 = automático, 0 = manual/desligado).
+
+Saídas:
+- pump_on: Sinal de controle para o relé da bomba (1 = Ligada, 0 = Desligada).
+- solenoid_open: Sinal de controle para a válvula solenoide (1 = Aberta, 0 = Fechada).
+- led_green: Indicador visual de bomba em operação.
+- led_red: Indicador visual de bomba desligada ou em falha.
+- fault: (Opcional, mas recomendado) Sinaliza uma condição de erro nos sensores.
+- seg_inf[6:0]: Barramento de 7 segmentos (a..g) do display do Tanque Inferior.
+- seg_sup[6:0]: Barramento de 7 segmentos (a..g) do display do Tanque Superior.

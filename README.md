@@ -51,7 +51,7 @@ Desenvolver um sistema automatizado de controle de nível de líquido baseado em
 ### Arquitetura Funcional
 A arquitetura do sistema segue um fluxo unidirecional: os sensores discretos enviam os níveis para a FSM, que processa a lógica de controle e envia comandos para os atuadores (bomba/válvula) e indicadores (LEDs/Displays).
 
-![Figura 1 – Arquitetura funcional](/docs/figures/fig1_arch.png)
+![Figura 1 – Arquitetura funcional](/Código_V04/docs/figures/fig1_arch.png)
 
 ### Máquina de Estados (FSM)
 A controladora é modelada como uma FSM de dois estados:

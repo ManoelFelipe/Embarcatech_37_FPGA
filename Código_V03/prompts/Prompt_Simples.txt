@@ -24,9 +24,8 @@ Regras de Controle da Bomba:
   - Nível do tanque inferior ≤ 25%
 
 Regras de Controle da Válvula:
-• A válvula inicia ABERTA
-• Fecha somente quando o tanque inferior estiver em 100%
-• Reabre assim que o nível cair abaixo de 100%
+• Abre quando o nível for <= 75% do tanque inferior
+• Fecha quando o tanque inferior atinge 100% (LVL_INF_REFILL)
 
 Regras Visuais (LEDs):
 • LED verde → bomba ligada (ON = 1)

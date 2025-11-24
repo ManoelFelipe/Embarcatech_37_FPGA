@@ -74,13 +74,14 @@ Os cenários de simulação contemplaram: (i) partida normal (Sup=25%, Inf=75%);
 
 Observou-se um comportamento determinístico e livre de oscilações espúrias, com histerese funcional. A sinalização por LEDs e o mapeamento dos displays facilitaram a depuração em bancada.
 
+<!-- 
 ### Fotos da Bancada
 
 | Protótipo em Bancada (Visão Geral) | Indicadores Visuais (Displays e LEDs) |
 | :---: | :---: |
 | ![Protótipo em bancada](docs/figures/foto_prototipo_bancada.png) | ![Indicadores visuais](docs/figures/foto_displays_leds.png) |
 | *Figura 4: Montagem geral com bomba, válvula e FPGA.* | *Figura 5: Displays indicando níveis e LEDs de status.* |
-
+)-->
 ---
 
 
